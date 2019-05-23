@@ -3,9 +3,10 @@ import Jumbotron from "./components/Jumbotron";
 import Nav from "./components/Nav";
 import Input from "./components/Input";
 import Button from "./components/Button";
-import API from "./utils/API";
+// import API from "./utils/API";
 import { RecipeList, RecipeListItem } from "./components/RecipeList";
 import { Container, Row, Col } from "./components/Grid";
+import axios from 'axios';
 
 class App extends Component {
   state = {
@@ -23,12 +24,18 @@ class App extends Component {
   };
 
   handleFormSubmit = event => {
+    axios.post('/users/new', this.state).then(user => {
+      this.setState({user});
+    }).catch(err => {
+      if(err) throw err;
+    })
+    };
     // When the form is submitted, prevent its default behavior, get recipes update the recipes state
-    event.preventDefault();
-    API.getRecipes(this.state.recipeSearch)
-      .then(res => this.setState({ recipes: res.data }))
-      .catch(err => console.log(err));
-  };
+  //   event.preventDefault();
+  //   API.getRecipes(this.state.recipeSearch)
+  //     .then(res => this.setState({ recipes: res.data }))
+  //     .catch(err => console.log(err));
+  // };
 
   render() {
     return (
